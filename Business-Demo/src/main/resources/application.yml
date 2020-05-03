@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: business-demo
+  profiles:
+    active: dev
+
+server:
+  port: 8801
+  servlet:
+    context-path: /business
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1002/eureka/
+    eureka-server-read-timeout-seconds: 20
+    healthcheck:
+      enabled: true
+  instance:
+    prefer-ip-address: true
+    instanceId: ${spring.cloud.client.ip-address}:${server.port}
+
+hystrix:
+  threadpool:
+    default:
+      maximumSize: 15
+      coreSize: 15
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000000
+      fallback:
+        isolation:
+          semaphore:
+            maxConcurrentRequests: 15
+feign:
+  hystrix:
+    enabled: false
+  httpclient:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 2000000
+        readTimeout: 3000000
+        loggerLevel: basic
+
+ribbon:
+  ReadTimeout: 6000000
+  ConnectTimeout: 60000000
+  MaxAutoRetries: 0
+  eager-load:
+    enabled: true
+    clients: codebox-service
+
+code:
+  business:
+    id: 1
+    system:
+      id: 1
+  refresh:
+    open: false
+    cron: 0 0/5 * * * ?

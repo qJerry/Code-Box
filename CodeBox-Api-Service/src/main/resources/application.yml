@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: codebox-service
+  profiles:
+    active: dev
+  datasource:
+    hikari:
+      username: root
+      password: 123456
+      maximum-pool-size: 100
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      auto-commit: true
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 10000
+      connection-test-query: SELECT 1
+    url: jdbc:mysql://localhost:3306/code_box?characterEncoding=utf-8&serverTimezone=GMT%2B8
+
+server:
+  port: 8501
+  servlet:
+      context-path: /u/a
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1002/eureka/
+    eureka-server-read-timeout-seconds: 20
+    healthcheck:
+      enabled: true
+  instance:
+    prefer-ip-address: true
+    instanceId: ${spring.cloud.client.ip-address}:${server.port}
+
+mybatis-plus:
+  mapper-locations: mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+

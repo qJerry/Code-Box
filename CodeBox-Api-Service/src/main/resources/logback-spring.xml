@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 seconds">
+    <springProperty scope="context" name="appname" source="spring.application.name" defaultValue="def" />
+
+    <logger name="com.github" level="DEBUG"/>
+    <logger name="org.apache.http" level="INFO"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="com.netflix" level="WARN"/>
+    <logger name="com.alibaba.druid" level="WARN"/>
+    <logger name="org.springframework.test" level="WARN"/>
+
+    <property name="LOG_FILE_PATH" value="/data/logs/lyy/saas2"/>
+    <property name="APP_NAME" value="${appname}" />
+
+    <property name="maxFileSize" value="50MB"/>
+    <property name="maxHistory" value="30"/>
+    <property name="commonPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{80} [%file:%line] - %msg%n%rEx{full,
+     java.lang.reflect.Method,
+     javax.servlet.http,
+     java.util.concurrent,
+     java.net,
+     sun.reflect,
+     sun.net,
+     org.apache.catalina,
+     org.springframework.aop,
+     org.springframework.data,
+     org.springframework.jdbc,
+     org.springframework.security,
+     org.springframework.transaction,
+     org.springframework.web,
+     org.springframework.beans,
+     org.springframework.cglib,
+     org.springframework.cloud.netflix,
+     org.springframework.retry.support,
+     rx,
+     feign,
+     net.sf.cglib,
+     redis.clients,
+     org.apache.tomcat.util,
+     org.apache.coyote,
+     com.netflix.hystrix,
+     com.netflix.loadbalancer.reactive,
+     com.alibaba.druid.sql,
+     com.alibaba.druid.filter,
+     ByCGLIB,
+     BySpringCGLIB$
+}"/>
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>${commonPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
