@@ -1,6 +1,7 @@
 package com.github.qjerry.cron;
 
 import com.github.qjerry.common.StatusCode;
+import com.github.qjerry.config.CodeBoxConfig;
 import com.github.qjerry.dto.BusinessSystemDTO;
 import com.github.qjerry.service.CodeBoxApiService;
 import com.github.qjerry.utils.CodeUtils;
@@ -8,7 +9,6 @@ import com.github.qjerry.vo.BusinessCodeVO;
 import com.github.qjerry.vo.CommonVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -31,11 +31,6 @@ import java.util.List;
 @ConditionalOnProperty(name = "code.refresh.open", havingValue = "true")
 public class RefreshCodeSchedule {
 
-    @Value("${err-code.business.id:1}")
-    private Long businessId;
-    @Value("${err-code.business.system.id:1}")
-    private Long businessSystemId;
-
     @Autowired
     private CodeBoxApiService bizCodeApiService;
 
@@ -45,7 +40,7 @@ public class RefreshCodeSchedule {
     @Scheduled(cron = "${code.refresh.cron}")
     public void refresh() {
         log.debug("\n==================== 开始刷新错误码 ====================");
-        CommonVO<List<BusinessCodeVO>> businessCodes = bizCodeApiService.getBusinessCode(BusinessSystemDTO.create(businessId, businessSystemId));
+        CommonVO<List<BusinessCodeVO>> businessCodes = bizCodeApiService.getBusinessCode(BusinessSystemDTO.create(CodeBoxConfig.businessId, CodeBoxConfig.businessSystemId));
         if(businessCodes.getCode() != StatusCode.STATUS_SUCCESS) {
             log.error("获取更新后的错误码失败！");
             return;

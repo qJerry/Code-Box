@@ -63,3 +63,4 @@ code:
   refresh:
     open: false
     cron: 0 0/5 * * * ?
+  sync-log: false

@@ -34,7 +34,7 @@ public class CodeUtils {
             Method method = localClassByBytes.getMethod("getStatusCode", Long.class);
             codeEnum = (StatusCodeDTO) method.invoke(null, code);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             codeEnum = StatusCodeDTO.create(-1L, "系统错误", "系统错误");
         }
         return codeEnum;

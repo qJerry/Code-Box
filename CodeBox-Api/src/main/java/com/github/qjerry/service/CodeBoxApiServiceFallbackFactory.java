@@ -2,6 +2,7 @@ package com.github.qjerry.service;
 
 import com.github.qjerry.dto.BusinessCodeDTO;
 import com.github.qjerry.dto.BusinessSystemDTO;
+import com.github.qjerry.dto.LogDTO;
 import com.github.qjerry.vo.CommonVO;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -30,44 +31,50 @@ public class CodeBoxApiServiceFallbackFactory implements FallbackFactory<CodeBox
         return new CodeBoxApiService() {
             @Override
             public CommonVO getBusinessSystem(BusinessSystemDTO businessSystemDTO) {
-                log.debug("获取业务系统信息失败！");
+                log.error("获取业务系统信息失败！");
                 return CommonVO.err("获取业务系统信息失败！");
             }
 
             @Override
             public CommonVO getBusiness(BusinessSystemDTO businessSystemDTO) {
-                log.debug("获取业务信息失败！");
+                log.error("获取业务信息失败！");
                 return CommonVO.err("获取业务信息失败！");
             }
 
             @Override
             public CommonVO getSystem(BusinessSystemDTO businessSystemDTO) {
-                log.debug("获取系统信息失败！");
+                log.error("获取系统信息失败！");
                 return CommonVO.err("获取系统信息失败！");
             }
 
             @Override
             public CommonVO getConfig(BusinessSystemDTO businessSystemDTO) {
-                log.debug("获取配置信息失败！");
+                log.error("获取配置信息失败！");
                 return CommonVO.err("获取配置信息失败！");
             }
 
             @Override
             public CommonVO getApplyBizcodeRange(BusinessSystemDTO businessSystemDTO) {
-                log.debug("获取错误码区间信息失败！");
+                log.error("获取错误码区间信息失败！");
                 return CommonVO.err("获取错误码区间信息失败！");
             }
 
             @Override
             public CommonVO batchSaveOrUpdate(BusinessCodeDTO businessCodeDTO) {
-                log.debug("批量保存错误码失败！");
+                log.error("批量保存错误码失败！");
                 return CommonVO.err("批量保存错误码失败！");
             }
 
             @Override
             public CommonVO getBusinessCode(BusinessSystemDTO businessSystemDTO) {
-                log.debug("获取错误码信息失败！");
+                log.error("获取错误码信息失败！");
                 return CommonVO.err("获取错误码信息失败！");
+            }
+
+            @Override
+            public CommonVO addLog(LogDTO logDTO) {
+                log.error("同步错误码日志失败！");
+                return CommonVO.err("同步错误码日志失败！");
             }
         };
     }

@@ -1,7 +1,11 @@
 package com.github.qjerry.exception;
 
+import com.github.qjerry.config.CodeBoxConfig;
+import com.github.qjerry.event.CodeLogEvent;
 import com.github.qjerry.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class WebErrorHandler {
 
+    @Autowired
+    ApplicationContext context;
+
     @ExceptionHandler(value = CodeBoxGlobalException.class)
     @ResponseBody
     public ResultVO errorHandler(CodeBoxGlobalException e) {
@@ -26,6 +33,9 @@ public class WebErrorHandler {
         vo.setCode(e.getCode());
         vo.setMessage(e.getMessage());
         vo.setDetails(e.getDetail());
+        if(CodeBoxConfig.syncLog) {
+            context.publishEvent(new CodeLogEvent(e));
+        }
         return vo;
     }
 

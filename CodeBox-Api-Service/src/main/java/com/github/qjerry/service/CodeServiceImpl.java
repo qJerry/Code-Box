@@ -74,6 +74,20 @@ public class CodeServiceImpl implements CodeService {
                 ArrayList::new
         ));
         List<ApplyCodeInterval> applyCodeIntervals = applyBizcodeRange.getApplyCodeIntervals();
+        applyCodeIntervals.stream().forEach(applyCodeInterval -> {
+            UpdateWrapper wrapper = new UpdateWrapper<AdBusinessCode>();
+            wrapper.set("status", 1);
+            wrapper.gt("code", applyCodeInterval.getApplyCodeStartInterval());
+            wrapper.lt("code", applyCodeInterval.getApplyCodeEndInterval());
+//            wrapper.isNotNull("updated");
+//            wrapper.lt("updated", date);
+//            wrapper.or();
+//            wrapper.isNull("updated");
+//            wrapper.lt("created", date);
+            businessCodeMapper.update(null, wrapper);
+        });
+
+
         List<CodeDTO> finalCodeDTOs = Lists.newArrayList();
         for(CodeDTO codeDTO : codeDTOs) {
             Long code = Long.valueOf(systemCode) + codeDTO.getCode();
@@ -108,14 +122,6 @@ public class CodeServiceImpl implements CodeService {
                 businessCodeHistoryMapper.insert(new AdBusinessCodeHistory(businessCode));
             }
         });
-        UpdateWrapper wrapper = new UpdateWrapper<AdBusinessCode>();
-        wrapper.set("status", 1);
-        wrapper.isNotNull("updated");
-        wrapper.lt("updated", date);
-        wrapper.or();
-        wrapper.isNull("updated");
-        wrapper.lt("created", date);
-        businessCodeMapper.update(null, wrapper);
         return 0;
     }
 

@@ -2,6 +2,7 @@ package com.github.qjerry.service;
 
 import com.github.qjerry.dto.BusinessCodeDTO;
 import com.github.qjerry.dto.BusinessSystemDTO;
+import com.github.qjerry.dto.LogDTO;
 import com.github.qjerry.vo.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,4 +76,12 @@ public interface CodeBoxApiService {
      */
     @PostMapping("/u/a/code/getBusinessCode")
     CommonVO<List<BusinessCodeVO>> getBusinessCode(@RequestBody BusinessSystemDTO businessSystemDTO);
+
+    /**
+     * 同步错误日志
+     * @param logDTO
+     * @return
+     */
+    @PostMapping("/u/a/log/sync")
+    CommonVO addLog(@RequestBody LogDTO logDTO);
 }

@@ -13,7 +13,7 @@ import lombok.Data;
  * @since 2020/4/2
  */
 @Data
-public class CodeBoxGlobalException extends Exception {
+public class CodeBoxGlobalException extends RuntimeException {
 
     private Long code;
     private String message;

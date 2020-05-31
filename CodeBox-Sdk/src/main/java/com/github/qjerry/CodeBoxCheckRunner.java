@@ -2,6 +2,7 @@ package com.github.qjerry;
 
 import com.alibaba.fastjson.JSON;
 import com.github.qjerry.common.StatusCode;
+import com.github.qjerry.config.CodeBoxConfig;
 import com.github.qjerry.dto.BusinessCodeDTO;
 import com.github.qjerry.dto.BusinessSystemDTO;
 import com.github.qjerry.dto.CodeDTO;
@@ -38,21 +39,17 @@ import java.util.stream.Collectors;
 @Component
 public class CodeBoxCheckRunner implements ApplicationRunner {
 
-    @Value("${err-code.business.id:1}")
-    private Long businessId;
-    @Value("${err-code.business.system.id:1}")
-    private Long businessSystemId;
-
     @Autowired
     private CodeBoxApiService bizCodeApiService;
 
     @Value("classpath:code.json")
     private Resource resource;
 
-
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        log.info("------------->> 初始化加载检测错误码内容 <<-------------");
+        Long businessId = CodeBoxConfig.businessId;
+        Long businessSystemId = CodeBoxConfig.businessSystemId;
+        log.info("------------->> 初始化检测错误码内容 <<-------------");
         log.debug("配置业务部门id：{}，配置业务系统id：{}", businessId, businessSystemId);
 
         if(Objects.isNull(businessId) || Objects.isNull(businessSystemId)) {

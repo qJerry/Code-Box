@@ -91,3 +91,16 @@ CREATE TABLE `ad_business_system`  (
   `createdby` int(11) NOT NULL,
   PRIMARY KEY (`ad_business_system_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '业务系统表';
+
+-- ----------------------------
+-- Table structure for ad_business_code_log
+-- ----------------------------
+CREATE TABLE `ad_business_code_log` (
+  `ad_business_code_log_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ad_business_id` int(11) NOT NULL COMMENT '业务部门id',
+  `ad_business_system_id` int(11) DEFAULT NULL COMMENT '业务系统id',
+  `content` LONGTEXT NOT NULL COMMENT '日志内容',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdby` int(11) NOT NULL,
+  PRIMARY KEY (`ad_business_code_log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='业务错误日志表';
