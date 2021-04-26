@@ -38,7 +38,7 @@
         <lombok.version>1.18.8</lombok.version>
 
         <fastjson.version>1.2.58</fastjson.version>
-        <commonio.version>2.6</commonio.version>
+        <commonio.version>2.7</commonio.version>
 
         <swagger2.version>2.9.2</swagger2.version>
         <slf4j.version>1.7.28</slf4j.version>
